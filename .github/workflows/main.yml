@@ -43,7 +43,7 @@ jobs:
         if: always()
         with:
           severity: ${{ job.status == 'success' && 'info' || 'error' }}
-          text: "${{ job.status == 'success' && 'Success: https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNhajE5NXlqNnJneHVlMHZwN3R5cXdxOW5rNHNvZ3k1YTVzbzloMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/5GyP41iWGBHTzmDfZx/giphy.gif' || 'Failure: https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNhajE5NXlqNnJneHVlMHZwN3R5cXdxOW5rNHNvZ3k1YTVzbzloMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/kJyTAZq6OEwqr2HAf4/giphy.gif' }} Rapport de Test - ${{ github.repository }}"
+          text: "${{ job.status == 'success' && 'https://giphy.com/gifs/canalplus-srie-emma-de-caunes-cration-dcale-5GyP41iWGBHTzmDfZx' || 'https://giphy.com/gifs/canalplus-srie-emma-de-caunes-cration-dcale-kJyTAZq6OEwqr2HAf4' }}"
           
           details: |
             **Branche** : `${{ github.ref_name }}`
@@ -67,7 +67,7 @@ jobs:
 
           imageUrl: ${{ job.status == 'success' && 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNhajE5NXlqNnJneHVlMHZwN3R5cXdxOW5rNHNvZ3k1YTVzbzloMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/5GyP41iWGBHTzmDfZx/giphy.gif' || 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNhajE5NXlqNnJneHVlMHZwN3R5cXdxOW5rNHNvZ3k1YTVzbzloMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/kJyTAZq6OEwqr2HAf4/giphy.gif' }}
           
-          footer: "Aujourd’hui à ${{ github.event.head_commit.timestamp || 'moment présent' }}"
+          footer: "Aujourd’hui à ${{ github.event.head_commit.timestamp || 'moment présent' }} , philipe veille sur tes commits mon loubard"
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   release:
