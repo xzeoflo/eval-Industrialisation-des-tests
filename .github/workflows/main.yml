@@ -80,13 +80,6 @@ jobs:
                     "label": "📦 ARTIFACTS",
                     "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts",
                     "emoji": { "name": "💎" }
-                  },
-                  {
-                    "type": 2,
-                    "style": 5,
-                    "label": "🎧 ÉCOUTER KATERINE",
-                    "url": "'"$SPOTIFY"'",
-                    "emoji": { "name": "🎵" }
                   }
                 ]
               }
