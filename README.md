@@ -1,5 +1,5 @@
 # eval-Industrialisation-des-tests
 
-**Alexis Lamonnier**
-**Florian Gemini**
+**Alexis Gemini**
+**Florian Ogueton**
 **Lucien Werquin**
