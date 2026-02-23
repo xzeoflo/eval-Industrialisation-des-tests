@@ -42,8 +42,13 @@ jobs:
         uses: rjstone/discord-webhook-notify@v1
         if: always()
         with:
-          severity: info
-          details: "Test finished for Python ${{ matrix.python-version }} on ${{ github.repository }}"
+          severity: ${{ job.status == 'success' && 'info' || 'error' }}
+          details: |
+            ${{ job.status == 'success' 
+                && '### 🌸 J’ADORE ! J’ADORE ! 🌸 \n\n Ton code est **formidable**, il est **nu**, il est **libre** comme une petite chenille sur un chou-fleur. \n\n ![Katerine Dance](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJtZmx4bmVvYmF4bmVvYmF4bmVvYmF4bmVvYmF4bmVvJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l0MYK0S9fshfI8N96/giphy.gif)' 
+                || '### 🍌 C’EST TERRIBLE... 🍌 \n\n Le test a fait un malaise vagal. C’est affreux, tout le monde est triste, même les légumes. \n\n ![Katerine Sad](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJtZmx4bmVvYmF4bmVvYmF4bmVvYmF4bmVvYmF4bmVvJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKUnBVUAsXV3mda/giphy.gif)' 
+            }}
+          footer: "Version Python ${{ matrix.python-version }} | Philippe veille sur tes commits."
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   release:
