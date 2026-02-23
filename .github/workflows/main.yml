@@ -38,59 +38,60 @@ jobs:
           name: test-report-${{ matrix.python-version }}
           path: report.xml
 
-      - name: 🕺 DISCO-NOTIFICATION (VIP LED & LOUXOR)
+      - name: 🕺 DISCO-V2 ULTIME (BOUTONS & LOUXOR)
         if: always()
         run: |
-          # Couleurs Néon et GIFs Grande Taille
           if [ "${{ job.status }}" == "success" ]; then
-            COLOR=2817792 # Vert Électrique
+            COLOR=2817792 # Vert Laser
             GIF="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNhajE5NXlqNnJneHVlMHZwN3R5cXdxOW5rNHNvZ3k1YTVzbzloMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/5GyP41iWGBHTzmDfZx/giphy.gif"
-            SONG="🎶 *Louxor J’adore... et je coupe le son !*"
-            MUSIC_URL="https://open.spotify.com/track/4uS9N9f7YmF8kXj1XyI3Yy" # Lien vers le banger
+            MSG="🌸 **J’ADORE !** C'est Versailles ici, tout est nu et libre. 🌸"
+            # LIEN SPOTIFY : Louxor J'adore
+            SPOTIFY="https://open.spotify.com/track/4uXST6fVInq5m9iT9u469v"
           else
-            COLOR=16711680 # Rouge Laser Alerte
+            COLOR=16711680 # Rouge Alerte
             GIF="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNhajE5NXlqNnJneHVlMHZwN3R5cXdxOW5rNHNvZ3k1YTVzbzloMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/kJyTAZq6OEwqr2HAf4/giphy.gif"
-            SONG="🔊 *Malaise Vagal... Système en PLS !*"
-            MUSIC_URL="https://www.youtube.com/watch?v=dQw4w9WgXcQ" # Petit troll de sécurité
+            MSG="🍌 **MALAISIE VAGAL !** On a perdu l'hélico dans les strass. 🍌"
+            # LIEN SPOTIFY : La Banane
+            SPOTIFY="https://open.spotify.com/track/0K0YfA0N1f8w19pB4H31F6"
           fi
 
+          # 2. Envoi via CURL pour gérer les COMPONENTS V2 (Boutons physiques)
           curl -X POST -H "Content-Type: application/json" \
           -d '{
-            "username": "Philippe Katerine - Disco Service",
+            "username": "Philippe Katerine Deluxe Edition",
             "avatar_url": "https://i.imgur.com/8nS8vS4.jpeg",
+            "content": "**MAINTENANT DANS TES OREILLES :**\n'"$SPOTIFY"'",
             "embeds": [{
-              "title": "✨ SYSTÈME PAILLETÉ V2 - TEST REPORT ✨",
-              "description": "**🕺 AMBIANCE** : '"$SONG"'\n\n**🚁 UNITÉ D’ÉLITE** : `${{ github.actor }}`\n**🦾 COMPONENT** : `V2 LED-STRASS`",
+              "title": "💎 DASHBOARD NÉON - COMPONENT V2 💎",
+              "description": "'"$MSG"'\n\n**🕺 PILOTE** : `${{ github.actor }}`\n**📟 VERSION** : `STRASS-V2.0`",
               "color": '$COLOR',
-              "fields": [
-                { "name": "📡 Branche", "value": " `${{ github.ref_name }}`", "inline": true },
-                { "name": "💎 Status", "value": " `${{ job.status }}`", "inline": true },
-                { "name": "⛓️ Run ID", "value": " `${{ github.run_id }}`", "inline": true }
-              ],
               "image": { "url": "'"$GIF"'" },
-              "footer": { "text": "✨ Paillettes, strass et hélicos - Philippe veille sur ton flow mon loubard ✨" }
+              "footer": { "text": "✨ Philippe Katerine veille sur ton workflow mon loubard ✨" }
             }],
             "components": [
               {
-                "type": 1,
+                "type": 1, 
                 "components": [
                   {
                     "type": 2,
                     "style": 5,
-                    "label": "🚁 VOIR L’HÉLICO (LOGS)",
-                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    "label": "🚁 LOGS (HÉLICO)",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "emoji": { "name": "🚁" }
                   },
                   {
                     "type": 2,
                     "style": 5,
-                    "label": "🎵 MONTER LE SON",
-                    "url": "'"$MUSIC_URL"'"
+                    "label": "📦 ARTIFACTS",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts",
+                    "emoji": { "name": "💎" }
                   },
                   {
                     "type": 2,
                     "style": 5,
-                    "label": "📦 ARTIFACT",
-                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts"
+                    "label": "🎧 ÉCOUTER KATERINE",
+                    "url": "'"$SPOTIFY"'",
+                    "emoji": { "name": "🎵" }
                   }
                 ]
               }
