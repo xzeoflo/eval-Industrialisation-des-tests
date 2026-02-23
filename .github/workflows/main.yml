@@ -43,13 +43,34 @@ jobs:
         if: always()
         with:
           severity: ${{ job.status == 'success' && 'info' || 'error' }}
+          # On pimp le titre avec le statut et l'icône
+          text: "${{ job.status == 'success' && '🌸 SUCCÈS DIVIN' || '❌ DRAME EXISTENTIEL' }} pour Python ${{ matrix.python-version }}"
           details: |
             ${{ job.status == 'success' 
-                && '🌸 J’ADORE ! J’ADORE ! Ton code est formidable, il est nu, il est libre comme une petite chenille sur un chou-fleur.' 
-                || '🍌 C’EST TERRIBLE... Le test a fait un malaise vagal. C’est affreux, tout le monde est triste, même les légumes.' 
+                && '🌸 **J’ADORE !** 🌸 Ton code est nu et libre comme une petite chenille. @KJZZ' 
+                || '🍌 **C’EST TERRIBLE...** 🍌 Le test a fait un malaise vagal. Oh miiinceee.' 
             }}
+
+            ---
+            📊 **STATISTIQUES DU MOMENT**
+            - **Dépôt** : `${{ github.repository }}`
+            - **Branche** : `${{ github.ref_name }}`
+            - **Auteur** : `${{ github.actor }}`
+            - **Événement** : `${{ github.event_name }}`
+            
+            ⏱️ **PERFORMANCES**
+            - **Temps total du job** : Environ `${{ job.status == 'success' && 'rapide' || 'laborieux' }}`
+            - **Workflow ID** : `${{ github.run_id }}`
+            
+            🎨 **GRAPHIQUE DE BEAUTÉ**
+            ${{ job.status == 'success' 
+                && '██████████████ 100% de grâce' 
+                || '███░░░░░░░░░░░ 15% de tristesse' 
+            }}
+          
+          # On utilise imageUrl pour le GIF
           imageUrl: ${{ job.status == 'success' && 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNhajE5NXlqNnJneHVlMHZwN3R5cXdxOW5rNHNvZ3k1YTVzbzloMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/5GyP41iWGBHTzmDfZx/giphy.gif' || 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNhajE5NXlqNnJneHVlMHZwN3R5cXdxOW5rNHNvZ3k1YTVzbzloMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/kJyTAZq6OEwqr2HAf4/giphy.gif' }}
-          footer: "Version Python ${{ matrix.python-version }} | Philippe veille sur tes commits."
+          footer: "Commit: ${{ github.sha }} | Philippe regarde tes chiffres."
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   release:
