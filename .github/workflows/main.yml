@@ -38,35 +38,64 @@ jobs:
           name: test-report-${{ matrix.python-version }}
           path: report.xml
 
-      - name: Discord notification
-        uses: rjstone/discord-webhook-notify@v1
+      - name: 🕺 DISCO-NOTIFICATION (VIP LED & LOUXOR)
         if: always()
-        with:
-          severity: ${{ job.status == 'success' && 'info' || 'error' }}
-          text: "${{ job.status == 'success' && 'Bravo' || 'Nul' }}"
-          
-          details: |
-            **Branche** : `${{ github.ref_name }}`
-            **Message** : ${{ github.event.head_commit.message || 'Tag Release' }}
-            **Auteur** : ${{ github.actor }}
+        run: |
+          # Couleurs Néon et GIFs Grande Taille
+          if [ "${{ job.status }}" == "success" ]; then
+            COLOR=2817792 # Vert Électrique
+            GIF="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNhajE5NXlqNnJneHVlMHZwN3R5cXdxOW5rNHNvZ3k1YTVzbzloMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/5GyP41iWGBHTzmDfZx/giphy.gif"
+            SONG="🎶 *Louxor J’adore... et je coupe le son !*"
+            MUSIC_URL="https://open.spotify.com/track/4uS9N9f7YmF8kXj1XyI3Yy" # Lien vers le banger
+          else
+            COLOR=16711680 # Rouge Laser Alerte
+            GIF="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNhajE5NXlqNnJneHVlMHZwN3R5cXdxOW5rNHNvZ3k1YTVzbzloMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/kJyTAZq6OEwqr2HAf4/giphy.gif"
+            SONG="🔊 *Malaise Vagal... Système en PLS !*"
+            MUSIC_URL="https://www.youtube.com/watch?v=dQw4w9WgXcQ" # Petit troll de sécurité
+          fi
 
-            **Repository** **Ref**
-            [${{ github.repository }}](${{ github.server_url }}/${{ github.repository }})      `${{ github.ref }}`
-
-            **Event - push**
-            `${{ github.sha }}` ${{ github.event.head_commit.message }}
-
-            **Triggered by** **Workflow**
-            ${{ github.actor }}                 [${{ github.workflow }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-
-            ---
-            ${{ job.status == 'success' 
-                && '### 🌸 J’ADORE ! J’ADORE ! 🌸  Ton code est **formidable**, il est **nu**, il est **libre**.' 
-                || '### 🍌 C’EST TERRIBLE... 🍌  Le test a fait un malaise vagal. C’est affreux.' 
-            }}
-          
-          footer: "Aujourd’hui à ${{ github.event.head_commit.timestamp || 'moment présent' }} , philipe veille sur tes commits mon loubard"
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          curl -X POST -H "Content-Type: application/json" \
+          -d '{
+            "username": "Philippe Katerine - Disco Service",
+            "avatar_url": "https://i.imgur.com/8nS8vS4.jpeg",
+            "embeds": [{
+              "title": "✨ SYSTÈME PAILLETÉ V2 - TEST REPORT ✨",
+              "description": "**🕺 AMBIANCE** : '"$SONG"'\n\n**🚁 UNITÉ D’ÉLITE** : `${{ github.actor }}`\n**🦾 COMPONENT** : `V2 LED-STRASS`",
+              "color": '$COLOR',
+              "fields": [
+                { "name": "📡 Branche", "value": " `${{ github.ref_name }}`", "inline": true },
+                { "name": "💎 Status", "value": " `${{ job.status }}`", "inline": true },
+                { "name": "⛓️ Run ID", "value": " `${{ github.run_id }}`", "inline": true }
+              ],
+              "image": { "url": "'"$GIF"'" },
+              "footer": { "text": "✨ Paillettes, strass et hélicos - Philippe veille sur ton flow mon loubard ✨" }
+            }],
+            "components": [
+              {
+                "type": 1,
+                "components": [
+                  {
+                    "type": 2,
+                    "style": 5,
+                    "label": "🚁 VOIR L’HÉLICO (LOGS)",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  },
+                  {
+                    "type": 2,
+                    "style": 5,
+                    "label": "🎵 MONTER LE SON",
+                    "url": "'"$MUSIC_URL"'"
+                  },
+                  {
+                    "type": 2,
+                    "style": 5,
+                    "label": "📦 ARTIFACT",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts"
+                  }
+                ]
+              }
+            ]
+          }' ${{ secrets.DISCORD_WEBHOOK }}
 
   release:
     needs: test
