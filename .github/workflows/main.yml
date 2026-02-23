@@ -49,7 +49,7 @@ jobs:
                 || '### 🍌 C’EST TERRIBLE... 🍌 Le test a fait un malaise vagal. C’est affreux, tout le monde est triste, même les légumes. ' 
             }}
           imageUrl: ${{ job.status == 'success' && 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNhajE5NXlqNnJneHVlMHZwN3R5cXdxOW5rNHNvZ3k1YTVzbzloMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/kJyTAZq6OEwqr2HAf4/giphy.gif' || 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNhajE5NXlqNnJneHVlMHZwN3R5cXdxOW5rNHNvZ3k1YTVzbzloMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/bJKr9ws9PSAj6PkEEl/giphy.gif' }}      
-          footer: "Version Python ${{ matrix.python-version }} | Philippe veille sur tes commits."
+          footer: "Version Python ${{ matrix.python-version }} | Philippe veille sur tes commits. I AM BATMAN"
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   release:
